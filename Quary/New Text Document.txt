@@ -1,0 +1,28 @@
+*******Subject gpa*****
+
+SELECT *, 
+	CASE
+    	when grade = 'A+' then (4.0)
+        when grade = 'A' then (4.0)
+	    when grade = 'A-' then (3.7)
+	    when grade = 'B+' then (3.3)
+	    when grade = 'B' then  (3.0)
+	    when grade = 'B-' then (2.7)
+	    when grade = 'C+' then (2.3)
+	    when grade = 'C' then  (2.0)
+	    when grade = 'C-' then (1.7)
+	    when grade = 'D+' then (1.3)
+	    when grade = 'D' then  (1.0)
+	    when grade = 'D-' then (0.7)
+        else
+            (0.0*2)/2
+     END as gpa
+FROM `results` GROUP BY student_ID , semester,subjects_ID, course_ID
+
+
+****semester GPZ****
+SELECT student_ID,semester,course_ID,round(sum((gpa)*subject_Credit)/sum(subject_Credit),2) as Fgpa FROM `subjects_gpa` GROUP BY student_ID , semester, course_ID
+
+
+***final GPA*****
+SELECT student_ID,course_ID,round(sum(Fgpa)/count(semester),2) FROM `semester_gpa` GROUP BY student_ID

@@ -1,0 +1,63 @@
+<table name="f2" class="td" style="width: 50%;margin-top: 50px;margin-left: 170px;">
+            
+            <tr>
+            <th>Course ID </th>
+            <th>Subjects ID </th>
+            <th>Subject Credit</th>
+            <th>Assignment Mark</th>
+            <th>Paper Mark</th>
+            <th>Final Result</th>
+            <th>Grade</th>
+            
+            </tr>
+
+        <?php
+        
+                if (isset($_POST['search'])) {
+    
+                    // $courseID=$_POST['courseID'];
+                    $studentID=$_POST['studentID'];
+                    $semester=$_POST['semester'];
+                    // var_dump($_POST);
+                    $query=mysqli_query($con,"select course_ID,subjects_ID,subject_Credit FROM `student_subjects` WHERE student_ID='$studentID' and samester='$semester'");
+
+
+                    if ($query) {
+
+
+
+                        while ($rec=mysqli_fetch_assoc($query)) {
+
+                            $tb="<tr>";
+                            $tb.="<td>$rec[course_ID]</td>";
+                            $tb.="<td>$rec[subjects_ID]</td>";
+                            $tb.="<td>$rec[subject_Credit]</td>";
+                            $tb.="<td><input type='text' name='assiment' id='assiment' class='form-control' style='width:40px;' value=0></td>";
+                            $tb.="<td><input type='text' name='paper' id='paper' class='form-control' style='width:40px;' value=0></td>";
+                            $tb.="<td><input type='text' name='re' id='re' class='form-control' style='width:40px;' value=0></td>";
+                             $tb.="<td><input type='text'  class='form-control' style='width:40px;' value=0></td>";
+                          
+                            $tb.="</tr>";
+                            
+                            echo $tb;
+
+                            }
+                        }
+                    }
+                    ?>
+              
+
+        
+        </table>
+        <button type="button"  name="cal" id="cal" onclick="calc()" class="btn btn-primary btn-block" style="width:20%;margin-left: 350px;">calculate</button>
+
+        </form> 
+        <script>
+function calc()
+{
+    var in1=document.getElementById('paper').value;
+    var in2=document.getElementById('assiment').value;
+    var in3=in1+in2;
+	document.a.f2.re.value =in3; 
+}
+</script>
